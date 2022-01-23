@@ -31,12 +31,15 @@ export default {
         }
     },
     computed: {
-        note: function () {
+        note() {
             let [ note ] = this.$store.getters.getNote(this.note_id);
             return note || false;
         }
     },
     methods: {
+        /**
+         * @param  {Boolean} answer - Response true or false 
+         */
         deleteNote(answer) {
             if (answer) {
                 this.$store.dispatch('deleteNote', this.note_id);

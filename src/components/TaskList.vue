@@ -7,7 +7,6 @@
 </template>
 
 <script>
-//let { log } = console;
 
 export default {
     props: {
@@ -15,7 +14,7 @@ export default {
         limit: Number
     },
     computed: {
-        filterTasksFromNote: function () {
+        filterTasksFromNote() {
             return this.$store.getters.filterTasksFromNote(this.id_note, this.limit);
         }
     }

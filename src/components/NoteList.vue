@@ -42,6 +42,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * @param  {Boolean} answer - Response true or false 
+         */
         deleteNote(answer) {
             if (answer) {
                 this.$store.dispatch('deleteNote', this.currentNote);
@@ -142,5 +145,4 @@ export default {
     .todo-list__btn + .todo-list__btn {
         margin-left: 6px;
     }
-
 </style>

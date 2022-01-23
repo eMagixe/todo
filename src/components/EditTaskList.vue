@@ -18,7 +18,6 @@
 </template>
 
 <script>
-//let { log } = console;
 import Popup from './Popup.vue';
 
 export default {
@@ -35,6 +34,9 @@ export default {
         id_note: Number
     },
     methods: {
+        /**
+         * @param  {Boolean} answer - Response true or false 
+         */
         deleteTask(answer) {
             if (answer) this.$store.dispatch('deleteTask', this.currentTask);
         },
@@ -48,6 +50,9 @@ export default {
         saveAll() {
             this.$store.dispatch('saveAll');
         },
+        /**
+         * @param  {Boolean} answer - Response true or false 
+         */
         resetAll(answer) {
             if (answer) this.$store.dispatch('loadData');
         }

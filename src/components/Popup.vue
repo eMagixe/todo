@@ -22,6 +22,9 @@ export default {
         close() {
             this.$emit('close');
         },
+        /**
+         * @param  {Boolean} answer - Response true or false 
+         */
         response(answer) {
             this.$emit('response', answer);
             this.$emit('close');
