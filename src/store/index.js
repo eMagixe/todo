@@ -64,7 +64,12 @@ const store = new Vuex.Store({
             state.tasks.splice(index, 1);
         },
         createTask(state, taskObj) {
-            taskObj.id = state.tasks[state.tasks.length - 1]?.id + 1 || 1;
+            if(Array.isArray(state.tasks)) {
+                taskObj.id = state.tasks[state.tasks.length - 1]?.id + 1 || 1;
+            } else {
+                state.tasks = [];
+                taskObj.id = state.tasks[state.tasks.length - 1]?.id + 1 || 1;
+            }
             state.tasks.push(taskObj);
         },
         deleteNote(state, id) {
@@ -76,8 +81,14 @@ const store = new Vuex.Store({
             });
         },
         createNote: (state, noteObj) => {
-            noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
+            if(Array.isArray(state.notes)) {
+                noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
+            } else {
+                state.notes = [];
+                noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
+            }
             state.notes.push(noteObj);
+
         },
         saveAll(state) {
             localStorage.setItem('notes', JSON.stringify(state.notes));
