@@ -5,36 +5,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        notes: [
-            { id: 1, name: 'Note 1' },
-            { id: 2, name: 'Note 2' },
-        ],
-        tasks: [
-            {
-                id: 1,
-                id_note: 1,
-                text: 'Task 1', 
-                status: false
-            },
-            { 
-                id: 2,
-                id_note: 2,
-                text: 'Task 2',
-                status: true
-            },
-            {
-                id: 3,
-                id_note: 1,
-                text: 'Task 3', 
-                status: false
-            },
-            { 
-                id: 4,
-                id_note: 2,
-                text: 'Task 4',
-                status: true
-            }
-        ]
+        notes: [],
+        tasks: [],
     },
     actions: {
         deleteTask({ commit }, id) {
@@ -73,6 +45,8 @@ const store = new Vuex.Store({
             state.tasks.push(taskObj);
         },
         deleteNote(state, id) {
+            if(!Array.isArray(state.tasks)) state.tasks = [];
+            if(!Array.isArray(state.notes)) state.notes = [];
             const index = state.notes.findIndex(el => el.id === id);
             state.notes.splice(index, 1);
             state.tasks.forEach((el, i) => {
@@ -81,12 +55,9 @@ const store = new Vuex.Store({
             });
         },
         createNote: (state, noteObj) => {
-            if(Array.isArray(state.notes)) {
-                noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
-            } else {
-                state.notes = [];
-                noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
-            }
+            if(!Array.isArray(state.notes)) store.tasks = [] 
+            noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
+            noteObj.id = state.notes[state.notes.length - 1]?.id + 1 || 1;
             state.notes.push(noteObj);
 
         },
@@ -100,16 +71,18 @@ const store = new Vuex.Store({
         }
     },
     getters: {
-        filterTasksFromNote: (store) => (id_note, limit = 0) => {
-            let filtered = store.tasks.filter(el => el.id_note === id_note);
+        filterTasksFromNote: (state) => (id_note, limit = 0) => {
+            if(!Array.isArray(state.tasks)) state.tasks = [] 
+            let filtered = state.tasks.filter(el => el.id_note === id_note);
             if(limit > 0) return filtered.slice(0, limit);
             else return filtered;
         },
-        getNotes: (store) => {
-            return store.notes;
+        getNotes: (state) => {
+            return state.notes;
         },
-        getNote: (store) => (id) => {
-            return store.notes.filter(el => el.id === id);
+        getNote: (state) => (id) => {
+            if(!Array.isArray(state.notes)) state.notes = [] 
+            return state.notes.filter(el => el.id === id);
         }
     }
 });
